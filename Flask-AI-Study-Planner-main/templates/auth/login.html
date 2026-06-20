@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In — StudyFlow</title>
+  <meta name="description" content="Sign in to your StudyFlow account"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card fade-in">
+    <h1>StudyFlow</h1>
+    <p class="subtitle">Sign in to your account to continue.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in messages %}
+        <div class="flash {{ cat }}" style="margin-bottom:16px;">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('auth.login') }}">
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password"/>
+      </div>
+      <button type="submit" class="btn btn-primary w-full" style="margin-top:8px;justify-content:center;">Sign In →</button>
+    </form>
+
+    <div class="auth-footer">
+      Don't have an account? <a href="{{ url_for('auth.register') }}">Create one</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

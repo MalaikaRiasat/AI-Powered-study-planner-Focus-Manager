@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account — StudyFlow</title>
+  <meta name="description" content="Create your StudyFlow account"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card fade-in">
+    <h1>StudyFlow</h1>
+    <p class="subtitle">Create your account and start studying smarter.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in messages %}
+        <div class="flash {{ cat }}" style="margin-bottom:16px;">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('auth.register') }}">
+      <div class="form-group">
+        <label class="form-label" for="name">Full Name</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Alex Johnson" required autocomplete="name"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-input" type="password" id="password" name="password" placeholder="Min. 6 characters" required autocomplete="new-password"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="confirm_password">Confirm Password</label>
+        <input class="form-input" type="password" id="confirm_password" name="confirm_password" placeholder="Repeat password" required autocomplete="new-password"/>
+      </div>
+      <button type="submit" class="btn btn-primary w-full" style="margin-top:8px;justify-content:center;">Create Account →</button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

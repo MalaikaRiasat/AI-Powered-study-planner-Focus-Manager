@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% block page_title %}Notifications{% endblock %}
+{% block page_subtitle %}Upcoming deadlines, exams & missed tasks{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-24">
+  <h2 class="section-title" style="margin:0;">All Notifications</h2>
+  <button class="btn btn-ghost btn-sm" onclick="markAllRead()">Mark All Read</button>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+  <!-- Urgent -->
+  <div class="card">
+    <h3 style="font-size:1rem;color:var(--maroon);margin-bottom:14px;">⚠ Urgent</h3>
+    <div id="urgentNotifs"><div class="text-muted text-sm pulse">Loading…</div></div>
+  </div>
+
+  <!-- High Priority -->
+  <div class="card">
+    <h3 style="font-size:1rem;margin-bottom:14px;">🔔 Upcoming</h3>
+    <div id="highNotifs"><div class="text-muted text-sm pulse">Loading…</div></div>
+  </div>
+
+  <!-- Today's Sessions -->
+  <div class="card">
+    <h3 style="font-size:1rem;margin-bottom:14px;">📅 Today's Sessions</h3>
+    <div id="sessionNotifs"><div class="text-muted text-sm pulse">Loading…</div></div>
+  </div>
+
+  <!-- All Stored -->
+  <div class="card">
+    <h3 style="font-size:1rem;margin-bottom:14px;">📬 System Messages</h3>
+    <div id="storedNotifs"><div class="text-muted text-sm pulse">Loading…</div></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/notifications.js') }}"></script>
+{% endblock %}

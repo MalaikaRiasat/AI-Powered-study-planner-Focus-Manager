@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Schedule{% endblock %}
+{% block page_title %}Schedule{% endblock %}
+{% block page_subtitle %}Plan and track your study sessions{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-24">
+  <h2 class="section-title" style="margin:0;">Study Schedule</h2>
+  <div class="flex gap-8">
+    <button class="btn btn-outline btn-sm" onclick="openRescheduleModal()">✦ AI Reschedule</button>
+    <button class="btn btn-primary" onclick="openAddSessionModal()">+ Add Session</button>
+  </div>
+</div>
+
+<!-- Missed Tasks Section -->
+<div id="missedSection" class="hidden mb-24">
+  <div class="card missed-card">
+    <div class="flex-between" style="margin-bottom:12px;">
+      <h3 style="font-size:1rem;color:var(--maroon);">⚠ Missed Tasks</h3>
+      <button class="btn btn-primary btn-sm" onclick="openRescheduleModal()">AI Reschedule →</button>
+    </div>
+    <div id="missedList"></div>
+  </div>
+</div>
+
+<!-- Weekly Schedule Grid -->
+<div class="card mb-24">
+  <h3 style="font-size:1rem;margin-bottom:16px;">This Week</h3>
+  <div class="schedule-grid" id="scheduleGrid">
+    <div class="text-muted text-sm pulse" style="grid-column:1/-1;">Loading schedule…</div>
+  </div>
+</div>
+
+<!-- Upcoming Sessions Table -->
+<div class="card">
+  <h3 style="font-size:1rem;margin-bottom:16px;">Upcoming Sessions (Next 14 Days)</h3>
+  <div class="table-wrap">
+    <table id="sessionsTable">
+      <thead>
+        <tr>
+          <th>Date</th><th>Subject</th><th>Planned Hours</th><th>Source</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="sessionsBody">
+        <tr><td colspan="6" class="text-muted text-sm" style="text-align:center;padding:24px;">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Session Modal -->
+<div class="modal-overlay" id="addSessionModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add Study Session</h3>
+      <button class="modal-close" onclick="document.getElementById('addSessionModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <select class="form-input" id="sessionSubject"></select>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-input" id="sessionDate"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Planned Hours</label>
+          <input type="number" class="form-input" id="sessionHours" min="0.5" max="8" step="0.5" placeholder="2.0"/>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="document.getElementById('addSessionModal').classList.remove('open')">Cancel</button>
+      <button class="btn btn-primary" onclick="addSession()">Add Session</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/schedule.js') }}"></script>
+{% endblock %}

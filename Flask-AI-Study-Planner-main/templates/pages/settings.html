@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block page_title %}Settings{% endblock %}
+{% block page_subtitle %}Manage your account preferences{% endblock %}
+
+{% block content %}
+<div style="max-width:560px;">
+  <h2 class="section-title">Account</h2>
+
+  <div class="card mb-24">
+    <h3 style="font-size:1rem;margin-bottom:16px;">Profile</h3>
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input class="form-input" type="text" id="settingName" value="{{ current_user.name }}"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input class="form-input" type="email" value="{{ current_user.email }}" disabled style="opacity:0.6;"/>
+    </div>
+    <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+    <div id="profileMsg" class="mt-8 text-sm hidden"></div>
+  </div>
+
+  <div class="card mb-24">
+    <h3 style="font-size:1rem;margin-bottom:16px;">Change Password</h3>
+    <div class="form-group">
+      <label class="form-label">Current Password</label>
+      <input class="form-input" type="password" id="currentPw" placeholder="••••••••"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">New Password</label>
+      <input class="form-input" type="password" id="newPw" placeholder="Min. 6 characters"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Confirm New Password</label>
+      <input class="form-input" type="password" id="confirmPw" placeholder="Repeat new password"/>
+    </div>
+    <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
+    <div id="pwMsg" class="mt-8 text-sm hidden"></div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:1rem;margin-bottom:8px;">About</h3>
+    <p class="text-sm text-muted">StudyFlow v1.0 — AI-powered Study Planner & Focus Manager.<br/>
+    Built with Flask, SQLite, and Gemini AI.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}

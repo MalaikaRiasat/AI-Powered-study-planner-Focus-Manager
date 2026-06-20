@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Welcome back, {{ current_user.name }}{% endblock %}
+
+{% block content %}
+<!-- Stat Cards -->
+<div class="stat-grid" id="statGrid">
+  <div class="stat-card">
+    <div class="stat-label">Subjects</div>
+    <div class="stat-value mono" id="statSubjects">—</div>
+    <div class="stat-sub">active this term</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Hours This Week</div>
+    <div class="stat-value mono" id="statCompleted">—</div>
+    <div class="stat-sub" id="statPlannedSub">of — planned</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Pomodoros</div>
+    <div class="stat-value mono" id="statPomodoro">—</div>
+    <div class="stat-sub">sessions this week</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Missed Tasks</div>
+    <div class="stat-value mono" id="statMissed" style="color:var(--maroon)">—</div>
+    <div class="stat-sub">need attention</div>
+  </div>
+</div>
+
+<!-- Charts + Upcoming -->
+<div class="grid-2" style="margin-bottom:24px;">
+  <div class="card">
+    <div class="flex-between mb-16">
+      <h2 style="font-size:1.1rem;">Weekly Hours</h2>
+      <span class="tag tag-maroon text-xs">Planned vs. Completed</span>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="weeklyChart"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:1.1rem;margin-bottom:16px;">Upcoming Exams</h2>
+    <div id="upcomingExams">
+      <div class="text-muted text-sm pulse">Loading…</div>
+    </div>
+
+    <h2 style="font-size:1.1rem;margin-top:20px;margin-bottom:12px;">Recent Activity</h2>
+    <div id="recentActivity">
+      <div class="text-muted text-sm pulse">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- Missed Tasks Banner -->
+<div id="missedBanner" class="hidden">
+  <div class="card missed-card mb-24">
+    <div class="flex-between">
+      <div>
+        <h2 style="font-size:1rem;color:var(--maroon);">⚠ Missed Tasks Detected</h2>
+        <p class="text-sm text-muted mt-8" id="missedBannerText"></p>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openRescheduleModal()">AI Reschedule →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Log Hours Quick Form -->
+<div class="card">
+  <h2 style="font-size:1.1rem;margin-bottom:16px;">Log Study Hours</h2>
+  <form id="logHoursForm" style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:12px;align-items:end;">
+    <div class="form-group" style="margin:0;">
+      <label class="form-label">Subject</label>
+      <select class="form-input" id="logSubject" required>
+        <option value="">Select subject…</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin:0;">
+      <label class="form-label">Date</label>
+      <input type="date" class="form-input" id="logDate" required/>
+    </div>
+    <div class="form-group" style="margin:0;">
+      <label class="form-label">Hours</label>
+      <input type="number" class="form-input" id="logHours" min="0.25" max="12" step="0.25" placeholder="2.0" style="width:90px;" required/>
+    </div>
+    <button type="submit" class="btn btn-primary">Log →</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
